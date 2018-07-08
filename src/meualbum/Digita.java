@@ -2,7 +2,7 @@
 package meualbum;
 
 import java.util.Scanner;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 
 /**
  *

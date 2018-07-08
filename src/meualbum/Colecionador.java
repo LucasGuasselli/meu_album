@@ -41,24 +41,34 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     private JTextField jtfFigDesej;
     private JTextField jtfFigDisp;
     private JTextField jtfNome;
+    private JLabel lblMessage;
+    private JLabel lblDisp;
+    private JLabel lblDesej;
 
-    
+    //array que armazena as figurinhas disponíveis
     private ArrayList<String> arrayFigDisp = new ArrayList();
+
+    //array que armazena as figurinhas desejáveis
     private ArrayList<String> arrayFigDesej = new ArrayList();
 
-    //construtor
+    /**
+     * Construtor da class Colec
+     * @throws IOException
+     */
     public Colecionador() throws IOException {
         //janela de interacao com o usuario
 
-        JLabel lblMessage = new JLabel("Informe seu nome!");
+        lblMessage = new JLabel("Informe seu nome:");
         jtfNome = new JTextField("Colecionador");
+        lblDisp = new JLabel("Informe a(s) figurinhas disponiveis:");
+        jtfFigDisp = new JTextField("");
+        lblDesej = new JLabel("Informe as figurinhas desejaveis:");
         jtfFigDesej = new JTextField("");
-        //jtfPorta = new JTextField("6789");
        
-        Object[] objeto = {lblMessage, jtfNome,jtfFigDesej};
+        Object[] objeto = {lblMessage, jtfNome, lblDisp, jtfFigDisp, lblDesej, jtfFigDesej};
         JOptionPane.showMessageDialog(null, objeto);
         
-        //separando aas cartas do usuario (desejadas e disponiveis
+        //separando as cartas do usuario (desejadas e disponiveis)
         String arrayTempDisp[] = jtfFigDisp.getText().split(",");
         String arrayTempDesej[] = jtfFigDesej.getText().split(",");
          
@@ -78,11 +88,10 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     /**
      * *
      * Método usado para conectar no server socket
+     * @throws java.io.IOException
      */
     public void conectar() throws IOException {
-        jtaDashboard.append("olá, já trocou figurinhas hoje!? \r\n");
-        //jtaDashboard.append("Menu: \r\n");
-        //jtaDashboard.append("Digite  \r\n");
+        jtaDashboard.append("Olá, você já trocou suas figurinhas hoje? \r\n");
 
         socket = new Socket("127.0.0.1", 6789);
         outputStream = socket.getOutputStream();
@@ -95,28 +104,30 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
 
     /**
      * Método usado para enviar mensagem para o server socket
-     * @param recebe uma String mensagem que o usuario digita
+     * @param msg
+     * @throws java.io.IOException
      */
     public void enviarMensagem(String msg) throws IOException {
 
-        if (msg.equals("Sair")) {
-            bufferWriter.write("Desconectado \r\n");
-            jtaDashboard.append("Desconectado \r\n");
-        }else if(msg.equals("1")){
+        switch (msg) {
+            case "Sair":
+                bufferWriter.write("Desconectado \r\n");
+                jtaDashboard.append("Desconectado \r\n");
+                break;
+            case "1":
                 jtaDashboard.append("Eu: minhas figurinhas sao: " );
                 bufferWriter.write("Minhas figurinhas sao: ");
-           for(int i = 0; i<arrayFigDisp.size(); i++){
-                bufferWriter.write(arrayFigDisp.get(i));
-                
-                jtaDashboard.append(arrayFigDisp.get(i));      
-            }//fecha loop
-            
-        }else if(msg.equals("2")){
-                
-          
-        }else {
-            bufferWriter.write(msg + "\r\n");
-            jtaDashboard.append("Eu: " + jtfMsg.getText() + "\r\n");
+                for(int i = 0; i<arrayFigDisp.size(); i++){
+                    bufferWriter.write(arrayFigDisp.get(i));
+                    jtaDashboard.append(arrayFigDisp.get(i));
+                }//fecha loop
+                break;
+            case "2":
+                break;
+            default:
+                bufferWriter.write(msg + "\r\n");
+                jtaDashboard.append("Eu: " + jtfMsg.getText() + "\r\n");
+                break;
         }      
         bufferWriter.flush();
         //parte do codigo que limpa a barra de digitacao do usuario
@@ -125,6 +136,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
 
     /**
      * Método usado para receber mensagem do servidor
+     * @throws java.io.IOException
      */
     public void escutar() throws IOException {
 
@@ -147,7 +159,12 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
         }
     }//fecha metodo ouvir
 
-    //nao está senod usado
+    //nao está sendo usado agora
+    /**
+     * Método de troca de figurinha
+     * @param codigo
+     * @throws IOException
+     */
     public void trocarFigurinha(int codigo) throws IOException {
 
         InputStream in = socket.getInputStream();       
@@ -158,7 +175,9 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
         msg = bfr.readLine();       
     }
 
-    //metodo que monta a User Interface
+    /**
+     * metodo que monta a User Interface
+     */
     public void montarPainel(){
         pnlPainel = new JPanel();
         lbChat = new JLabel("CHAT");
@@ -222,8 +241,10 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
         }
     }
 
-    //@param recebe evento de chave pressionada
-    //usado quando a tecla enter e pressionada
+    /**
+     * Usado quando a tecla enter e pressionada
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -234,22 +255,35 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
             }
         }
     }
-
     
+    /**
+     * Main da class Colecionador
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+
+        Colecionador col;
+            col = new Colecionador();
+        col.conectar();
+        col.escutar();
+    }
+
+    /**
+     * Método não utilizado
+     * @param arg0
+     */
     @Override
     public void keyReleased(KeyEvent arg0) {
         // TODO Auto-generated method stub               
     }
 
+    /**
+     * Método não utilizado
+     * @param arg0
+     */
     @Override
     public void keyTyped(KeyEvent arg0) {
         // TODO Auto-generated method stub               
     }
-
-    public static void main(String[] args) throws IOException {
-
-        Colecionador col = new Colecionador();
-        col.conectar();
-        col.escutar();
-    }//fcha main
 }//fecha classe

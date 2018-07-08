@@ -3,3 +3,5 @@ test/
 build.xml
 .idea/
 manifest.mf
+/build/
+/dist/

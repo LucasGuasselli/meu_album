@@ -60,7 +60,6 @@ public class Servidor extends Thread {
    
     public void run() {
         try {
-
             String msg;
             OutputStream ou = this.listenSocket.getOutputStream();
             Writer ouw = new OutputStreamWriter(ou);
