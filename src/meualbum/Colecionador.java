@@ -33,7 +33,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     private JLabel lbChat;
     private JLabel lbMsg;
     private JPanel pnlPainel;
-    private Socket socket;
+    private Socket socket = null;
     private OutputStream outputStream;
     private Writer writer;
     private BufferedWriter bufferWriter;
@@ -60,9 +60,9 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
 
         lblMessage = new JLabel("Informe seu nome:");
         jtfNome = new JTextField("Colecionador");
-        lblDisp = new JLabel("Informe a(s) figurinhas disponiveis:");
+        lblDisp = new JLabel("Figurinhas disponiveis:");
         jtfFigDisp = new JTextField("");
-        lblDesej = new JLabel("Informe as figurinhas desejaveis:");
+        lblDesej = new JLabel("Figurinhas desejaveis:");
         jtfFigDesej = new JTextField("");
        
         Object[] objeto = {lblMessage, jtfNome, lblDisp, jtfFigDisp, lblDesej, jtfFigDesej};
@@ -93,7 +93,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     public void conectar() throws IOException {
         jtaDashboard.append("Olá, você já trocou suas figurinhas hoje? \r\n");
 
-        socket = new Socket("127.0.0.1", 6789);
+        socket = new Socket("localhost", 6789);
         outputStream = socket.getOutputStream();
         writer = new OutputStreamWriter(outputStream);
         bufferWriter = new BufferedWriter(writer);
