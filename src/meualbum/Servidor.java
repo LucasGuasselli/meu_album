@@ -67,8 +67,6 @@ public class Servidor extends Thread {
             colecionadores.add(bfw);
             
             nome = msg = bufferReader.readLine();
-                      
-            //nome = msg; 
                               
             while (!"Sair".equalsIgnoreCase(msg) && msg != null) {
                 msg = bufferReader.readLine();
