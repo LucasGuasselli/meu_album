@@ -114,7 +114,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 bufferWriter.write("Desconectado \r\n");
                 jtaDashboard.append("Desconectado \r\n");
                 break;
-            case "troca":
+            case "troco":
                 jtaDashboard.append("Bot: troca \r\n");
                 jtaDashboard.append("Eu: Minhas figurinhas para troca são: \r\n" );
                 
@@ -137,6 +137,10 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                     jtaDashboard.append('[' + arrayFigDesej.get(i) + ']');
                 }
                 jtaDashboard.append("\r\n");
+                break;
+            case "" + "número a ser obtido":
+                break;
+            case "-" + "número a ser trocado":
                 break;
             default:
                 bufferWriter.write(msg + "\r\n");
