@@ -40,7 +40,7 @@ public class Servidor extends Thread {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {            
             servidor = new ServerSocket(6789);
             colecionadores = new ArrayList<BufferedWriter>();
@@ -49,6 +49,7 @@ public class Servidor extends Thread {
             while (true) {
                 System.out.println("Aguardando conexão...");
                 Socket con = servidor.accept();
+                //Socket con = new Socket("localhost", 6789);
                 System.out.println("Colecionador conectado...");
                 Thread t = new Servidor(con);
                 t.start();
@@ -67,6 +68,7 @@ public class Servidor extends Thread {
             colecionadores.add(bfw);
             
             nome = msg = bufferReader.readLine();
+            System.out.println(nome);
                               
             while (!"Sair".equalsIgnoreCase(msg) && msg != null) {
                 msg = bufferReader.readLine();

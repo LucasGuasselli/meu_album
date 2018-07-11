@@ -114,15 +114,29 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 bufferWriter.write("Desconectado \r\n");
                 jtaDashboard.append("Desconectado \r\n");
                 break;
-            case "1":
-                jtaDashboard.append("Eu: minhas figurinhas sao: " );
-                bufferWriter.write("Minhas figurinhas sao: ");
+            case "troca":
+                jtaDashboard.append("Bot: troca \r\n");
+                jtaDashboard.append("Eu: Minhas figurinhas para troca são: \r\n" );
+                
+                // For que lê o array de figurinhas disponíveis
+                jtaDashboard.append("Bot: ");
                 for(int i = 0; i<arrayFigDisp.size(); i++){
                     bufferWriter.write(arrayFigDisp.get(i));
-                    jtaDashboard.append(arrayFigDisp.get(i));
-                }//fecha loop
+                    jtaDashboard.append('[' + arrayFigDisp.get(i) + ']');
+                }
+                jtaDashboard.append("\r\n");
                 break;
-            case "2":
+            case "preciso":
+                jtaDashboard.append("Bot: preciso \r\n");
+                jtaDashboard.append("Eu: Figurinhas que necessito: \r\n" );
+                
+                // For que lê o array de figurinhas disponíveis
+                jtaDashboard.append("Bot: ");
+                for(int i = 0; i<arrayFigDesej.size(); i++){
+                    bufferWriter.write(arrayFigDesej.get(i));
+                    jtaDashboard.append('[' + arrayFigDesej.get(i) + ']');
+                }
+                jtaDashboard.append("\r\n");
                 break;
             default:
                 bufferWriter.write(msg + "\r\n");
@@ -218,12 +232,6 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     
     public void sair() throws IOException {
         System.exit(0);
-        /*enviarMensagem("Sair");
-        bfw.close();
-        ouw.close();
-        ou.close();
-        socket.close();
-                */
     }
 
     //@param evento disparado
