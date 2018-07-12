@@ -5,3 +5,6 @@ build.xml
 manifest.mf
 /build/
 /dist/
+META-INF/
+meu_album.iml
+out/

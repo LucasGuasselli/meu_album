@@ -59,7 +59,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
         //janela de interacao com o usuario
 
         lblMessage = new JLabel("Informe seu nome:");
-        jtfNome = new JTextField("Colecionador");
+        jtfNome = new JTextField("");
         lblDisp = new JLabel("Figurinhas disponiveis:");
         jtfFigDisp = new JTextField("");
         lblDesej = new JLabel("Figurinhas desejaveis:");
@@ -116,7 +116,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 break;
             case "troco":
                 jtaDashboard.append("Bot: troca \r\n");
-                jtaDashboard.append("Eu: Minhas figurinhas para troca são: \r\n" );
+                jtaDashboard.append(jtfNome.getText() + ": Minhas figurinhas para troca são: \r\n" );
                 
                 // For que lê o array de figurinhas disponíveis
                 jtaDashboard.append("Bot: ");
@@ -128,7 +128,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 break;
             case "preciso":
                 jtaDashboard.append("Bot: preciso \r\n");
-                jtaDashboard.append("Eu: Figurinhas que necessito: \r\n" );
+                jtaDashboard.append(jtfNome.getText() + ": Figurinhas que necessito: \r\n" );
                 
                 // For que lê o array de figurinhas disponíveis
                 jtaDashboard.append("Bot: ");
@@ -138,9 +138,23 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 }
                 jtaDashboard.append("\r\n");
                 break;
-            case "" + "número a ser obtido":
+            case "quero":
+                jtaDashboard.append("Bot: quero \r\n");
+                JLabel lbNumber = new JLabel("Número");
+                JTextField jtfNumber = new JTextField(5);
+
+                Object[] objeto = {lbNumber, jtfNumber};
+                JOptionPane.showMessageDialog(null, objeto);
+
+                for(int i = 0; i < arrayFigDesej.size(); i++){
+                    if(jtfNumber.equals(arrayFigDesej.get(i))){
+                        System.out.println("Encontrei");
+                    }
+                }
+
+
                 break;
-            case "-" + "número a ser trocado":
+            case "entrego":
                 break;
             default:
                 bufferWriter.write(msg + "\r\n");
