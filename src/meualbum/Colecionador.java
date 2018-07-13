@@ -51,6 +51,9 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     //array que armazena as figurinhas desejáveis
     private ArrayList<String> arrayFigDesej = new ArrayList();
 
+    //array que armazena as figurinhas que a pessoa tem
+    private ArrayList<String>  arrayFigTenho = new ArrayList<>();
+
     /**
      * Construtor da class Colec
      * @throws IOException
@@ -73,12 +76,11 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
         String arrayTempDesej[] = jtfFigDesej.getText().split(",");
          
         for(int i = 0; i<arrayTempDisp.length; i++){
-                   arrayFigDisp.add(arrayTempDisp[i]);
-                   //System.out.println(arrayFigDisp.get(i));
-        }       
+            arrayFigDisp.add(arrayTempDisp[i]);
+        }
+
         for(int i = 0; i<arrayTempDesej.length; i++){
-                   arrayFigDesej.add(arrayTempDesej[i]);
-                   //System.out.println(arrayFigDesej.get(i));
+            arrayFigDesej.add(arrayTempDesej[i]);
         }
         
         //metodo que monta a user interface
@@ -109,22 +111,25 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
      */
     public void enviarMensagem(String msg) throws IOException {
 
-        switch (msg) {
+        switch (msg.trim()) {
             case "Sair":
                 bufferWriter.write("Desconectado \r\n");
                 jtaDashboard.append("Desconectado \r\n");
                 break;
             case "troco":
-                jtaDashboard.append("Bot: troca \r\n");
+                jtaDashboard.append("Bot: troco \r\n");
+                bufferWriter.write("troco \r\n");
                 jtaDashboard.append(jtfNome.getText() + ": Minhas figurinhas para troca são: \r\n" );
+                bufferWriter.write("minhas figurinhas para troca são: \r\n");
                 
                 // For que lê o array de figurinhas disponíveis
                 jtaDashboard.append("Bot: ");
-                for(int i = 0; i<arrayFigDisp.size(); i++){
-                    bufferWriter.write(arrayFigDisp.get(i));
+                for(int i = 0; i<arrayFigDisp.size(); i++) {
+                    bufferWriter.write('[' + arrayFigDisp.get(i) + ']' );
                     jtaDashboard.append('[' + arrayFigDisp.get(i) + ']');
                 }
                 jtaDashboard.append("\r\n");
+                bufferWriter.write("\r\n");
                 break;
             case "preciso":
                 jtaDashboard.append("Bot: preciso \r\n");
@@ -146,15 +151,57 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 Object[] objeto = {lbNumber, jtfNumber};
                 JOptionPane.showMessageDialog(null, objeto);
 
-                for(int i = 0; i < arrayFigDesej.size(); i++){
-                    if(jtfNumber.equals(arrayFigDesej.get(i))){
-                        System.out.println("Encontrei");
+                for(int i = 0; i < arrayFigDesej.size(); i++) {
+                    //verifica se a figurinha que quer encontra-se nas desejáveis
+                    System.out.println("Chego aqui");
+                    System.out.println(jtfNumber.getText());
+                    System.out.println(arrayFigDesej.get(i));
+                    if(jtfNumber.getText().equals(arrayFigDesej.get(i))){
+                        jtaDashboard.append("Bot: Seu pedido está sendo processado...");
+                        int numberDesire = Integer.parseInt(jtfNumber.getText());
+                        // remove a figurinha do array de desejaveis
+                        arrayFigDesej.remove(numberDesire);
                     }
                 }
-
+                //Adiciona no array de figurinhas que agora possuí
+                arrayFigTenho.add(jtfNumber.getText());
+                jtaDashboard.append("Bot: Seu pedido está sendo finalizado.");
 
                 break;
             case "entrego":
+                jtaDashboard.append("Bot: entrego \r\n");
+                JLabel lbNumberEnvio = new JLabel("Número");
+                JTextField jtfNumberEnvio = new JTextField(5);
+
+                Object[] obj = {lbNumberEnvio, jtfNumberEnvio};
+                JOptionPane.showMessageDialog(null, obj);
+
+                for(int i = 0; i < arrayFigDisp.size(); i++) {
+                    //verifica se a figurinha que quer encontra-se nas disponíveis
+                    System.out.println(jtfNumberEnvio.getText());
+                    System.out.println(arrayFigDisp.get(i));
+                    if(jtfNumberEnvio.getText().equals(arrayFigDisp.get(i))){
+                        jtaDashboard.append("Bot: Seu pedido está sendo processado...");
+                        // remove a figurinha do array de disponíveis
+                        arrayFigDisp.add(jtfNumberEnvio.getText());
+                    }
+                }
+                //Adiciona no array de figurinhas que agora possuí
+                arrayFigTenho.add(jtfNumberEnvio.getText());
+                jtaDashboard.append("Bot: Seu pedido está sendo finalizado.");
+
+                break;
+            case "tenho":
+                jtaDashboard.append("Bot: tenho \r\n");
+                jtaDashboard.append(jtfNome.getText() + ": Resultado das trocas: \r\n" );
+
+                // For que lê o array de figurinhas disponíveis
+                jtaDashboard.append("Bot: ");
+                for(int i = 0; i<arrayFigTenho.size(); i++){
+                    bufferWriter.write(arrayFigTenho.get(i));
+                    jtaDashboard.append('[' + arrayFigTenho.get(i) + ']');
+                }
+                jtaDashboard.append("\r\n");
                 break;
             default:
                 bufferWriter.write(msg + "\r\n");
