@@ -133,7 +133,9 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 break;
             case "preciso":
                 jtaDashboard.append("Bot: preciso \r\n");
+                bufferWriter.write("preciso \r\n");
                 jtaDashboard.append(jtfNome.getText() + ": Figurinhas que necessito: \r\n" );
+                bufferWriter.write("figurinhas que necessito: \r\n");
                 
                 // For que lê o array de figurinhas disponíveis
                 jtaDashboard.append("Bot: ");
@@ -142,6 +144,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                     jtaDashboard.append('[' + arrayFigDesej.get(i) + ']');
                 }
                 jtaDashboard.append("\r\n");
+                bufferWriter.write("\r\n");
                 break;
             case "quero":
                 jtaDashboard.append("Bot: quero \r\n");
@@ -150,23 +153,22 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
 
                 Object[] objeto = {lbNumber, jtfNumber};
                 JOptionPane.showMessageDialog(null, objeto);
+                bufferWriter.write("quero o número " + jtfNumber.getText() + "\r\n");
 
                 for(int i = 0; i < arrayFigDesej.size(); i++) {
+
                     //verifica se a figurinha que quer encontra-se nas desejáveis
-                    System.out.println("Chego aqui");
-                    System.out.println(jtfNumber.getText());
-                    System.out.println(arrayFigDesej.get(i));
-                    if(jtfNumber.getText().equals(arrayFigDesej.get(i))){
-                        jtaDashboard.append("Bot: Seu pedido está sendo processado...");
-                        int numberDesire = Integer.parseInt(jtfNumber.getText());
+                    if(jtfNumber.getText().equals(arrayFigDesej.get(i).trim())){
+                        jtaDashboard.append("Bot: Seu pedido está sendo processado... \r\n");
+
                         // remove a figurinha do array de desejaveis
-                        arrayFigDesej.remove(numberDesire);
+                        arrayFigDesej.remove(arrayFigDesej.get(i));
                     }
                 }
                 //Adiciona no array de figurinhas que agora possuí
                 arrayFigTenho.add(jtfNumber.getText());
-                jtaDashboard.append("Bot: Seu pedido está sendo finalizado.");
-
+                jtaDashboard.append("Bot: Seu pedido foi finalizado. \r\n");
+                bufferWriter.write("Troca efetuada \r\n");
                 break;
             case "entrego":
                 jtaDashboard.append("Bot: entrego \r\n");
@@ -176,19 +178,21 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 Object[] obj = {lbNumberEnvio, jtfNumberEnvio};
                 JOptionPane.showMessageDialog(null, obj);
 
+                bufferWriter.write("entrego o número " + jtfNumberEnvio.getText() + "\r\n");
+
                 for(int i = 0; i < arrayFigDisp.size(); i++) {
-                    //verifica se a figurinha que quer encontra-se nas disponíveis
-                    System.out.println(jtfNumberEnvio.getText());
-                    System.out.println(arrayFigDisp.get(i));
-                    if(jtfNumberEnvio.getText().equals(arrayFigDisp.get(i))){
-                        jtaDashboard.append("Bot: Seu pedido está sendo processado...");
-                        // remove a figurinha do array de disponíveis
-                        arrayFigDisp.add(jtfNumberEnvio.getText());
+
+                    //verifica se a figurinha que quer encontra-se nas desejáveis
+                    if (jtfNumberEnvio.getText().equals(arrayFigDisp.get(i).trim())) {
+                        jtaDashboard.append("Bot: Seu pedido está sendo processado... \r\n");
+
+                        // remove a figurinha do array de desejaveis
+                        arrayFigDisp.remove(arrayFigDisp.get(i));
                     }
                 }
-                //Adiciona no array de figurinhas que agora possuí
-                arrayFigTenho.add(jtfNumberEnvio.getText());
-                jtaDashboard.append("Bot: Seu pedido está sendo finalizado.");
+
+                jtaDashboard.append("Bot: Seu pedido foi finalizado.");
+                bufferWriter.write("Troca efetuada \r\n");
 
                 break;
             case "tenho":
@@ -197,8 +201,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
 
                 // For que lê o array de figurinhas disponíveis
                 jtaDashboard.append("Bot: ");
-                for(int i = 0; i<arrayFigTenho.size(); i++){
-                    bufferWriter.write(arrayFigTenho.get(i));
+                for(int i = 0; i<arrayFigTenho.size(); i++) {
                     jtaDashboard.append('[' + arrayFigTenho.get(i) + ']');
                 }
                 jtaDashboard.append("\r\n");
