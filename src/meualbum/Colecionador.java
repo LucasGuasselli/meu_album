@@ -263,7 +263,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
     public void montarPainel(){
         pnlPainel = new JPanel();
         lbChat = new JLabel("CHAT");
-            jtaDashboard = new JTextArea(20, 40);
+            jtaDashboard = new JTextArea(25, 40);
             jtaDashboard.setEditable(false);
             jtaDashboard.setBackground(new Color(240, 240, 240));
         
@@ -293,7 +293,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
         setContentPane(pnlPainel);
         setLocationRelativeTo(null);
         setResizable(false);
-        setSize(490, 430);
+        setSize(490, 490);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
