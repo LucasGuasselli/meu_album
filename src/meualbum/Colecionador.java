@@ -10,7 +10,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -140,7 +139,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 // For que lê o array de figurinhas disponíveis
                 jtaDashboard.append("Bot: ");
                 for(int i = 0; i<arrayFigDesej.size(); i++){
-                    bufferWriter.write(arrayFigDesej.get(i));
+                    bufferWriter.write('[' +  arrayFigDesej.get(i) + ']');
                     jtaDashboard.append('[' + arrayFigDesej.get(i) + ']');
                 }
                 jtaDashboard.append("\r\n");
@@ -168,7 +167,6 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 //Adiciona no array de figurinhas que agora possuí
                 arrayFigTenho.add(jtfNumber.getText());
                 jtaDashboard.append("Bot: Seu pedido foi finalizado. \r\n");
-                bufferWriter.write("Troca efetuada \r\n");
                 break;
             case "entrego":
                 jtaDashboard.append("Bot: entrego \r\n");
@@ -184,16 +182,14 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
 
                     //verifica se a figurinha que quer encontra-se nas desejáveis
                     if (jtfNumberEnvio.getText().equals(arrayFigDisp.get(i).trim())) {
-                        jtaDashboard.append("Bot: Seu pedido está sendo processado... \r\n");
+                        jtaDashboard.append("Bot: Sua entrega está sendo processada... \r\n");
 
                         // remove a figurinha do array de desejaveis
                         arrayFigDisp.remove(arrayFigDisp.get(i));
                     }
                 }
 
-                jtaDashboard.append("Bot: Seu pedido foi finalizado.");
-                bufferWriter.write("Troca efetuada \r\n");
-
+                jtaDashboard.append("Bot: Seu pedido foi finalizado.\r\n");
                 break;
             case "tenho":
                 jtaDashboard.append("Bot: tenho \r\n");
