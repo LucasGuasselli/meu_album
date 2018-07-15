@@ -93,6 +93,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
      */
     public void conectar() throws IOException {
         jtaDashboard.append("Olá, você já trocou suas figurinhas hoje? \r\n");
+        jtaDashboard.append("Para mais informações, digite help. \r\n");
 
         socket = new Socket("localhost", 6789);
         outputStream = socket.getOutputStream();
@@ -202,6 +203,13 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
                 }
                 jtaDashboard.append("\r\n");
                 break;
+            case "help":
+                jtaDashboard.append("Segue a lista de comandos para a utilização do Bot \r\n");
+                jtaDashboard.append("troco: mostra as figurinhas disponíveis para troca \r\n");
+                jtaDashboard.append("preciso: mostra as figurinhas desejáveis obter \r\n");
+                jtaDashboard.append("quero: mostra aos usuários qual figurinha você deseja. \r\n");
+                jtaDashboard.append("entrego: entrega a figurinha que você tem disponível para troca \r\n");
+                jtaDashboard.append("tenho: mostra as figurinhas que você obeteve na troca \r\n");
             default:
                 bufferWriter.write(msg + "\r\n");
                 jtaDashboard.append("Eu: " + jtfMsg.getText() + "\r\n");
