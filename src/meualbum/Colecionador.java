@@ -93,6 +93,7 @@ public class Colecionador extends JFrame implements ActionListener, KeyListener 
      */
     public void conectar() throws IOException {
         jtaDashboard.append("Olá, você já trocou suas figurinhas hoje? \r\n");
+        jtaDashboard.append("Comandos disponíveis: troco, preciso, quero, entrego, tenho e help \r\n")
         jtaDashboard.append("Para mais informações, digite help. \r\n");
 
         socket = new Socket("localhost", 6789);
